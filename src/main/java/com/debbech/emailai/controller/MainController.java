@@ -19,9 +19,6 @@ public class MainController {
 
         queueProcessor.add(writeRequest);
         queueProcessor.add(writeRequest);
-        queueProcessor.add(writeRequest);
-        queueProcessor.add(writeRequest);
-
 
         return ResponseEntity.ok().body(writeRequest);
     }

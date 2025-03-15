@@ -12,12 +12,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class QueueProcessor implements IQueueProcessor {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
-
     private Queue<WriteRequest> waitQueue;
 
     private ExecutorService waitQueueProcessor;
@@ -27,6 +27,7 @@ public class QueueProcessor implements IQueueProcessor {
     public QueueProcessor(){
         this.waitQueueProcessor = Executors.newSingleThreadExecutor();
         this.postProcessor = Executors.newFixedThreadPool(3);
+        this.waitQueue = new LinkedList<>();
         new Thread(() -> {
             while(true){
                 this.process();
@@ -35,17 +36,13 @@ public class QueueProcessor implements IQueueProcessor {
     }
 
     @Override
-    public void add(WriteRequest writeRequest) {
-
-        if(this.waitQueue == null) this.waitQueue = new LinkedList<>();
-
+    public synchronized void add(WriteRequest writeRequest) {
         waitQueue.add(writeRequest);
         log.info("new request added with name: {}", writeRequest.getName());
     }
 
     @Override
-    public void process() {
-        if(this.waitQueue == null) this.waitQueue = new LinkedList<>();
+    public synchronized void process() {
 
         WriteRequest wr = this.waitQueue.poll();
         if(wr == null) return;
