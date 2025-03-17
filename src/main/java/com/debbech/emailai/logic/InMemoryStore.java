@@ -21,9 +21,11 @@ public class InMemoryStore implements IInMemoryStore{
     }
 
     @Override
-    public synchronized void addOne(Task task) {
+    public synchronized boolean addOne(Task task) {
         if(datastore == null) datastore = new ConcurrentHashMap<>();
+        if(this.getOne(task.getWriteRequest().getName()) != null) return false;
         datastore.put(task.getWriteRequest().getName(), task);
+        return true;
     }
 
     @Override

@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -33,6 +35,7 @@ public class PrepareResponseTread implements Runnable{
             task.setWriteResponse(wresp);
 
             task.setFailed(wresp == null);
+            task.setEndingTime(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
 
             new InMemoryStore().addOne(task);
         } catch (Exception e) {

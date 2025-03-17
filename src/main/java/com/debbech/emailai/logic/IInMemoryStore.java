@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IInMemoryStore {
 
-    void addOne(Task task);
+    boolean addOne(Task task);
     void deleteOne(Task task);
     List<Task> getAll();
 

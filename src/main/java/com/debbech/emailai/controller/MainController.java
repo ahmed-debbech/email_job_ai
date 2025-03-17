@@ -5,6 +5,7 @@ import com.debbech.emailai.logic.IQueueProcessor;
 import com.debbech.emailai.model.Task;
 import com.debbech.emailai.model.WriteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +25,9 @@ public class MainController {
     @PostMapping("/write")
     ResponseEntity<Object> write(@RequestBody WriteRequest writeRequest){
 
+        if(!inMemoryStore.addOne(new Task(writeRequest))) return ResponseEntity.status(HttpStatus.CONFLICT).body(writeRequest);
+
         queueProcessor.add(writeRequest);
-        inMemoryStore.addOne(new Task(writeRequest));
 
         return ResponseEntity.ok().body(writeRequest);
     }
