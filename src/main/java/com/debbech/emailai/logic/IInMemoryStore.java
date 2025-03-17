@@ -9,4 +9,6 @@ public interface IInMemoryStore {
     void addOne(Task task);
     void deleteOne(Task task);
     List<Task> getAll();
+
+    Task getOne(String name);
 }

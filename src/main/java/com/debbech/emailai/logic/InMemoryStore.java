@@ -17,21 +17,30 @@ public class InMemoryStore implements IInMemoryStore{
     private static Map<String, Task> datastore;
 
     public InMemoryStore(){
-        this.datastore = new ConcurrentHashMap<>();
+
     }
 
     @Override
     public synchronized void addOne(Task task) {
+        if(datastore == null) datastore = new ConcurrentHashMap<>();
         datastore.put(task.getWriteRequest().getName(), task);
     }
 
     @Override
     public synchronized void deleteOne(Task task) {
+        if(datastore == null) datastore = new ConcurrentHashMap<>();
         datastore.remove(task.getWriteRequest().getName());
     }
 
     @Override
     public synchronized List<Task> getAll() {
-        return new ArrayList<>(this.datastore.values());
+        if(datastore == null) datastore = new ConcurrentHashMap<>();
+        return new ArrayList<>(datastore.values());
+    }
+
+    @Override
+    public synchronized Task getOne(String name) {
+        if(datastore == null) datastore = new ConcurrentHashMap<>();
+        return datastore.get(name);
     }
 }

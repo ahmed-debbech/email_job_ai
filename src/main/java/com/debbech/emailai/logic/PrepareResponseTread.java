@@ -1,5 +1,6 @@
 package com.debbech.emailai.logic;
 
+import com.debbech.emailai.model.Task;
 import com.debbech.emailai.model.WriteRequest;
 import com.debbech.emailai.model.WriteResponse;
 import org.slf4j.Logger;
@@ -27,7 +28,11 @@ public class PrepareResponseTread implements Runnable{
 
         try {
             WriteResponse wresp = this.writeResponseFuture.get();
+            if(wresp == null) return;
 
+            Task task = new InMemoryStore().getOne(writeRequest.getName());
+            task.setWriteResponse(wresp);
+            new InMemoryStore().addOne(task);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
