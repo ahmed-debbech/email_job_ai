@@ -28,10 +28,12 @@ public class PrepareResponseTread implements Runnable{
 
         try {
             WriteResponse wresp = this.writeResponseFuture.get();
-            if(wresp == null) return;
 
             Task task = new InMemoryStore().getOne(writeRequest.getName());
             task.setWriteResponse(wresp);
+
+            task.setFailed(wresp == null);
+
             new InMemoryStore().addOne(task);
         } catch (Exception e) {
             throw new RuntimeException(e);

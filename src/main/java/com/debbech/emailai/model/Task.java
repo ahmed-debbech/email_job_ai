@@ -4,9 +4,14 @@ public class Task {
 
     private WriteRequest writeRequest;
     private WriteResponse writeResponse;
+    private Boolean failed;
 
-    public Task(WriteRequest writeRequest){
-        this.writeRequest = writeRequest;
+    public Boolean getFailed() {
+        return failed;
+    }
+
+    public void setFailed(Boolean failed) {
+        this.failed = failed;
     }
 
     @Override
@@ -14,7 +19,12 @@ public class Task {
         return "Task{" +
                 "writeRequest=" + writeRequest +
                 ", writeResponse=" + writeResponse +
+                ", failed=" + failed +
                 '}';
+    }
+
+    public Task(WriteRequest writeRequest){
+        this.writeRequest = writeRequest;
     }
 
     public WriteRequest getWriteRequest() {
