@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class PrepareResponseTread implements Runnable{
@@ -22,8 +23,13 @@ public class PrepareResponseTread implements Runnable{
 
     @Override
     public void run() {
-        while(!this.writeResponseFuture.isDone());
 
-        log.info("done processing request with name: {}", this.writeRequest.getName());
+        try {
+            log.info(this.writeResponseFuture.get().toString());
+            log.info("done processing request with name: {}", this.writeRequest.getName());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
