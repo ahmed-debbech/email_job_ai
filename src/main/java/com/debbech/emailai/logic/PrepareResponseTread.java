@@ -4,6 +4,7 @@ import com.debbech.emailai.model.WriteRequest;
 import com.debbech.emailai.model.WriteResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -25,8 +26,8 @@ public class PrepareResponseTread implements Runnable{
     public void run() {
 
         try {
-            log.info(this.writeResponseFuture.get().toString());
-            log.info("done processing request with name: {}", this.writeRequest.getName());
+            WriteResponse wresp = this.writeResponseFuture.get();
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

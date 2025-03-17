@@ -37,7 +37,7 @@ public class AiCallThread implements Callable<WriteResponse> {
 
         long startTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
 
-        String resp = this.doNetworkCall("192.168.1.10:11434", json);
+        String resp = this.doNetworkCall("197.17.123.154:11434", json);
 
         long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
 
@@ -63,8 +63,8 @@ public class AiCallThread implements Callable<WriteResponse> {
     private String doNetworkCall(String aiHost, String json){
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(Duration.ofMinutes(5))  // Time to establish the connection
-                .readTimeout(Duration.ofMinutes(5))     // Time to wait for the response
+                .connectTimeout(Duration.ofMinutes(1))  // Time to establish the connection
+                .readTimeout(Duration.ofMinutes(10))     // Time to wait for the response
                 .writeTimeout(Duration.ofMinutes(5))    // Time to send data (if applicable)
                 .build();
 
