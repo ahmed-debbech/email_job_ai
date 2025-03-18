@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -30,7 +31,10 @@ public class AiCallThread implements Callable<WriteResponse> {
     @Override
     public WriteResponse call() throws Exception {
 
-        ModelRequest modelRequest = new ModelRequest("llama3.2", "hello how are u", false);
+        String prompt = new TemplateEngine().generate(this.writeRequest.getTemplate_num(), this.writeRequest);
+        if(prompt == null) return null;
+
+        ModelRequest modelRequest = new ModelRequest("llama3.2", prompt, false);
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(modelRequest);
