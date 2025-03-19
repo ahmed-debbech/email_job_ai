@@ -3,11 +3,16 @@ package com.debbech.emailai.logic;
 import com.debbech.emailai.Config;
 import com.debbech.emailai.SpringContext;
 import com.debbech.emailai.model.WriteRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.util.Scanner;
 
 
 public class TemplateEngine {
+
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     public String generate(int tempid, WriteRequest writeRequest){
 
@@ -23,7 +28,7 @@ public class TemplateEngine {
             }
             myReader.close();
         } catch (Exception e) {
-            System.out.println("An error occurred.");
+            log.error("could not load template because: " + e.getMessage());
             return null;
         }
 
