@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Error handling
             error: function (error) {
-                console.log(`Error ${error}`);
+                $("#tit").html("Configuration is not set.. consider navigating to /api/config.html")
             }
         });
     }, 1000)

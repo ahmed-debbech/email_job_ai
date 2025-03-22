@@ -7,6 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -50,5 +56,23 @@ public class TemplateEngine {
         return f;
     }
 
+    public boolean storeTemplate(String text, int tempNum){
+        if(text == null) return false;
+        if(text.isEmpty()) return false;
+
+        Config myconfig = SpringContext.getBean(Config.class);
+        String absolutePath = myconfig.getTemplatePath();
+        File thedir = new File(absolutePath);
+        if(!thedir.exists()){
+            thedir.mkdirs();
+        }
+        Path file = Paths.get(absolutePath +"/temp"+tempNum);
+        try {
+            Files.write(file, List.of(text.split("\n")), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
 
 }

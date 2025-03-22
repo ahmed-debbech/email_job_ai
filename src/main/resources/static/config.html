@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ai Writes</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src=
+                    "https://code.jquery.com/jquery-3.6.0.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js" ></script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Global Configuration</h2>
+
+    <!-- TODAY SECTION -->
+    <h3 class="section-title">Meta</h3>
+    <div class="accordion" id="today">
+        <p>Ollama Server Ip</p>
+        <input id="ip" type="text">
+        <p>Ollama model to use</p>
+        <input id="model" type="text">
+    </div>
+    <button class = "copy-btn" onclick="saveMeta(document.getElementById('ip').value, document.getElementById('model').value)">Submit Meta </button>
+
+
+    <!-- EARLIER SECTION -->
+    <h3 class="section-title">Template number 1</h3>
+    <div class="accordion" id="earlier">
+        <textarea id="text" height="1000px"></textarea>
+
+    </div>
+
+    <button class = "copy-btn" onclick="saveTemplate(document.getElementById('text').value)">Submit Template </button>
+</div>
+
+<script src="script1.js"></script>
+
+</body>
+</html>
