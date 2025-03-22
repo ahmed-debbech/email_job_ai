@@ -32,7 +32,7 @@ The IOS Shortcut will ask you to provide:
 * template number to use (default is 1)
 
 ### How to install
-* For server: build the jar file or you can use our docker image.
+* For server: build the jar file or you can use our docker image with `docker pull the1dev/email_ai:latest`.
 * For IOS Shortcut client: you find [here]() the link to install it on your Iphone.
 * Install [Ollama](https://ollama.com/) preferably on same machine and pull your fav model to use (llama3.2 is recommended).
 

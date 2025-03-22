@@ -1,5 +1,7 @@
 package com.debbech.emailai.logic;
 
+import com.debbech.emailai.Config;
+import com.debbech.emailai.SpringContext;
 import com.debbech.emailai.model.ModelRequest;
 import com.debbech.emailai.model.ModelResponse;
 import com.debbech.emailai.model.WriteRequest;
@@ -34,14 +36,16 @@ public class AiCallThread implements Callable<WriteResponse> {
         String prompt = new TemplateEngine().generate(this.writeRequest.getTemplate_num(), this.writeRequest);
         if(prompt == null) return null;
 
-        ModelRequest modelRequest = new ModelRequest("llama3.2", prompt, false);
+        Config myconfig = SpringContext.getBean(Config.class);
+
+        ModelRequest modelRequest = new ModelRequest(myconfig.getOllamaModel(), prompt, false);
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(modelRequest);
 
         long startTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
 
-        String resp = this.doNetworkCall("197.17.123.154:11434", json);
+        String resp = this.doNetworkCall(myconfig.getOllamaIp(), json);
 
         long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
 
